@@ -153,6 +153,7 @@ function copyTextToClipboard(text) {
 }
 
 document.getElementById("share").onclick = function() {
+	console.log(dataToUrl())
 	copyTextToClipboard(mainUrl + dataToUrl());
 	alert("Link copied");
 }
