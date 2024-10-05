@@ -72,6 +72,7 @@ function isValid(input, rules) {
 }
 
 var url = location.href;
+var mainUrl = location.href.split("?")[0];
 ////// URL data
 function gup( name, url ) {
     if (!url) url = location.href;
@@ -152,6 +153,6 @@ function copyTextToClipboard(text) {
 }
 
 document.getElementById("share").onclick = function() {
-	copyTextToClipboard(dataToUrl());
+	copyTextToClipboard(mainUrl + dataToUrl());
 	alert("Link copied");
 }
