@@ -104,7 +104,7 @@ class Rule {
         if (str.includes('->')) {
             parts = str.split('->');
             stopped = false;
-        } else if (str.includes(' => ')) {
+        } else if (str.includes('=>')) {
             parts = str.split('=>');
             stopped = true;
         } else {
