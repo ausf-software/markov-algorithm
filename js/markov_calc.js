@@ -70,3 +70,88 @@ function hasNoSpacesOrNewlines(str) {
 function isValid(input, rules) {
 	return input != "" && hasNoSpacesOrNewlines(input) && rules != "";
 }
+
+var url = location.href;
+////// URL data
+function gup( name, url ) {
+    if (!url) url = location.href;
+    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var regexS = "[\\?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec( url );
+    return results == null ? null : results[1];
+}
+
+function parseDataUrl() {
+	var max_steps;
+	var intput_string = gup("intput_string");
+	try {
+		max_steps = parseInt(gup("max_steps"))
+	} catch (error) {
+		max_steps = 0;
+	}
+	document.getElementById('intput-string').value = intput_string;
+	document.getElementById('max-steps').value = max_steps;
+	var rules = decodeURIComponent(gup("rules"));
+	document.getElementById('rules-string').value = rules;
+}
+
+function dataToUrl() {
+	var intput_string = document.getElementById('intput-string').value;
+	var max_steps;
+	try {
+		var value = document.getElementById('max-steps').value;
+		max_steps = parseInt(value);
+		if (isNaN(max_steps)) {
+			max_steps = 0;
+		}
+	} catch (error) {
+		max_steps = 0;
+	}
+	var rules_string = (document.getElementById('rules-string').value);
+	var rules = encodeURIComponent(rules_string);
+	return `?intput_string=${intput_string}&max_steps=${max_steps}&rules=${rules}`;
+}
+
+if (url.split("?").length > 1) {
+	parseDataUrl();
+}
+
+function copyTextToClipboard(text) {
+	var textArea = document.createElement("textarea");
+  
+	textArea.style.position = 'fixed';
+	textArea.style.top = 0;
+	textArea.style.left = 0;
+  
+	textArea.style.width = '2em';
+	textArea.style.height = '2em';
+  
+	textArea.style.padding = 0;
+  
+	textArea.style.border = 'none';
+	textArea.style.outline = 'none';
+	textArea.style.boxShadow = 'none';
+  
+	textArea.style.background = 'transparent';
+  
+	textArea.value = text;
+  
+	document.body.appendChild(textArea);
+	textArea.focus();
+	textArea.select();
+  
+	try {
+	  var successful = document.execCommand('copy');
+	  var msg = successful ? 'successful' : 'unsuccessful';
+	} catch (err) {
+	  console.log('Oops, unable to copy');
+	}
+  
+	document.body.removeChild(textArea);
+}
+
+document.getElementById("share").onclick = function() {
+	copyTextToClipboard(dataToUrl());
+	alert("Link copied");
+}
