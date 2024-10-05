@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<title>Markov Algorithm Calculator</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap" rel="stylesheet">
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		
+		<link rel="icon" href="https://ausf-software.github.io/favicon.ico"> <!-- 32×32 -->
+		<link rel="icon" href="https://ausf-software.github.io/images/favicons/icon.svg" type="image/svg+xml">
+		<link rel="apple-touch-icon" href="https://ausf-software.github.io/images/favicons/apple.png">  <!-- 180×180 -->
+		<link rel="manifest" href="https://ausf-software.github.io/manifest.webmanifest">
+
+		<link rel="stylesheet" type="text/css" href="https://ausf-software.github.io/css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/markov_calc.css">
+		
+		<meta name="viewport" content="width=device-width">
+		<meta name="description" content="Алгоритм Маркова — это метод обработки строк, который использует набор правил для замены подстрок в исходной строке. Он широко применяется в теории автоматов и формальных языках, а также в различных областях, таких как лингвистика и искусственный интеллект. Алгоритм позволяет моделировать и анализировать последовательности символов, что делает его полезным инструментом для решения задач, связанных с преобразованием данных. | Markov algorithm is a string processing method that uses a set of rules for replacing substrings in the initial string. It is widely used in automata theory and formal languages, as well as in various fields such as linguistics and artificial intelligence. The algorithm allows modeling and analyzing sequences of characters, making it a useful tool for solving problems related to data transformation." />
+		<meta name="keywords" content="алгоритм Маркова, правила замены, формальные языки, теория автоматов, обработка строк, алгоритмы, искусственный интеллект | Markov algorithm, replacement rules, formal languages, automata theory, string processing, algorithms, artificial intelligence" />		
+		<meta name = "robots" content = "index,follow" />
+		<script type="text/javascript" src="https://ausf-software.github.io/js/script.js"></script>
+	</head>
+
+	<body>
+
+		<header id="header"></header>
+
+		<main>
+			<section>
+				<div class="calculator-settings">
+					<h1 class="calculator-text">Markov Algorithm Calculator</label>
+					<div id="head" class="head">
+						<form>
+							<div>
+								<label for="intput-string">Input string:</label>
+								<input type="text" name="intput-string" id="intput-string" placeholder="abc" onkeydown="if(event.keyCode==13){return false;}">
+							</div>
+							<div>
+								<label for="max-steps">Maximum number of steps:</label>
+								<input type="number" name="max-steps" id="max-steps" placeholder="1000" onkeydown="if(event.keyCode==13){return false;}">
+							</div>
+							<div>
+								<textarea type="text" name="rules-string" id="rules-string" placeholder="Rules" onkeydown="if(event.keyCode==13){return false;}"></textarea>
+							</div>
+							<div>
+								<input type="button" name="submit" id="submit" value="Submit">
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+			
+			<section class="answer_section">
+				<div class="container">
+				
+					<div class="answer_section_container">
+						<div class="answer_container" id="info">
+							<label id="info_selector" class="selector">&#9660; Readme</label>
+							<div id="info_div">
+								<p class='answer'>
+									<strong>Алгоритмы Маркова</strong> представляют собой формальные системы, которые используются для описания вычислений и манипуляций с символами. Они основаны на правилах, которые определяют, как преобразовывать строки символов, и находят применение в различных областях, включая теорию автоматов и логику.
+								</p>
+								<p class='answer'>
+									<strong>Правила алгоритмов Маркова</strong> записываются в виде пар, где каждая пара состоит из строки, которую нужно заменить, и строки, на которую она будет заменена. Эти правила записываются последовательно, каждое на новой строке.
+								</p>
+								<p class='answer'>
+									Через <code>-></code> описывается <strong>простая замена</strong>, а через <code>=></code> — <strong>заключительная замена</strong>.
+								</p>
+							</div>
+						</div>
+					</div>
+				
+					<div class="answer_section_container">
+						<div class="answer_container" id="text_answer">
+							<label id="answer_text_selector" class="selector">&#9660; Text answer</label>
+							<div id="text_answer_div">
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</section>
+		</main>
+
+		<script type="text/javascript" src="js/markov.js"></script>
+		<script type="text/javascript" src="js/markov_calc.js"></script>
+
+		<footer id="footer"></footer>
+		
+	</body>
+</html>
