@@ -15,7 +15,7 @@ class MarkovAlgorithm {
             }
             this.rules.push(Rule.parse(str));
         } catch (error) {
-            alert('Ошибка при добавлении правила:', error.message);
+            alert('Ошибка при добавлении правила: ' + error.message);
         }
     }
 

@@ -22,7 +22,11 @@ document.getElementById("submit").onclick = function(){
         var markovAlgorithm = new MarkovAlgorithm(intput_string);
 
         for (let rule of rules) {
-			if (rule.trim() != "")
+			var rt = rule.trim();
+			if (rt != "" && rt[0] == '/' && rt[1] == '/') {
+				continue;
+			}
+			if (rt != "")
             	markovAlgorithm.addRule(rule);
         }
 
