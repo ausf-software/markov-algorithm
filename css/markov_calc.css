@@ -116,10 +116,33 @@ input {
 	font-size: 16px;
 }
 
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #505585;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.custom-file-upload:hover {
+    background-color: #404060;
+}
+
 input[type=text],
 input[type=number] {
 	width:65%;
 	background-color: #AAAAAA;
+}
+
+input[type=button]:hover {
+    background-color: #404060;
 }
 
 textarea {

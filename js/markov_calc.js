@@ -1,8 +1,15 @@
 setHide("info_div", "info_selector", "Readme");
 setHide("text_answer_div", "answer_text_selector", "Text answer");
 
-document.getElementById("submit").onclick = function(){
-	var intput_string = document.getElementById('intput-string').value;
+function getAcceptButton() {
+	return document.getElementById("submit");
+}
+
+function getInputString() {
+	return document.getElementById('intput-string').value;
+}
+
+function getMaxSteps() {
 	var max_steps;
 	try {
 		var value = document.getElementById('max-steps').value;
@@ -13,11 +20,56 @@ document.getElementById("submit").onclick = function(){
 	} catch (error) {
 		max_steps = 0;
 	}
-	var rules_string = (document.getElementById('rules-string').value);
-	var rules = rules_string.split("\n");
+	return max_steps;
+}
 
-	if (isValid(intput_string, rules_string)) {
-		document.getElementById("text_answer_div").innerHTML = "<br>";
+function getRules() {
+	var rules_string = (document.getElementById('rules-string').value);
+	return rules_string.split("\n");
+}
+
+function getRulesString() {
+	return document.getElementById('rules-string').value;
+}
+
+function getName() {
+	return document.getElementById('name-string').value;
+}
+
+function setRules(rules) {
+	document.getElementById('rules-string').value = rules;
+}
+
+function setInputString(inputString) {
+	document.getElementById('intput-string').value = inputString;
+}
+
+function setName(name) {
+	document.getElementById('name-string').value = name;
+}
+
+function setMaxSteps(steps) {
+	document.getElementById('max-steps').value = steps;
+}
+
+function clearAnswer() {
+	document.getElementById("text_answer_div").innerHTML = "<br>";
+}
+
+function getAnswerDiv() {
+	return document.getElementById("text_answer_div");
+}
+function getProgrammsDiv() {
+	return document.getElementById("programms_div");
+}
+
+getAcceptButton().onclick = function(){
+	var intput_string = getInputString();
+	var max_steps = getMaxSteps();
+	var rules = getRules();
+
+	if (isValid(intput_string)) {
+		clearAnswer();
 		
         var markovAlgorithm = new MarkovAlgorithm(intput_string);
 
@@ -42,7 +94,7 @@ document.getElementById("submit").onclick = function(){
 			a += `<p class='answer_sub'>${s}</p>`;
 		}
 		
-		var theDivText = document.getElementById("text_answer_div");
+		var theDivText = getAnswerDiv();
 		theDivText.innerHTML = a;
 	} else {
 		alert("Invalid text");
@@ -71,8 +123,8 @@ function hasNoSpacesOrNewlines(str) {
     const regex = /^[^\s]*$/;
     return regex.test(str);
 }
-function isValid(input, rules) {
-	return input != "" && hasNoSpacesOrNewlines(input) && rules != "";
+function isValid(input) {
+	return input != "" && hasNoSpacesOrNewlines(input);
 }
 
 var url = location.href;
@@ -95,25 +147,16 @@ function parseDataUrl() {
 	} catch (error) {
 		max_steps = 0;
 	}
-	document.getElementById('intput-string').value = intput_string;
-	document.getElementById('max-steps').value = max_steps;
+	setInputString(intput_string);
+	setMaxSteps(max_steps);
 	var rules = decodeURIComponent(gup("rules"));
-	document.getElementById('rules-string').value = rules;
+	setRules(rules);
 }
 
 function dataToUrl() {
-	var intput_string = document.getElementById('intput-string').value;
-	var max_steps;
-	try {
-		var value = document.getElementById('max-steps').value;
-		max_steps = parseInt(value);
-		if (isNaN(max_steps)) {
-			max_steps = 0;
-		}
-	} catch (error) {
-		max_steps = 0;
-	}
-	var rules_string = (document.getElementById('rules-string').value);
+	var intput_string = getInputString();
+	var max_steps = getMaxSteps();
+	var rules_string = getRulesString();
 	var rules = encodeURIComponent(rules_string);
 	return `?intput_string=${intput_string}&max_steps=${max_steps}&rules=${rules}`;
 }
@@ -160,4 +203,97 @@ document.getElementById("share").onclick = function() {
 	console.log(dataToUrl())
 	copyTextToClipboard(mainUrl + dataToUrl());
 	alert("Link copied");
+}
+////////////////////////
+
+var programs = [];
+var cout_p = 0;
+
+function serializeMarkovPrograms(programs) {
+    return JSON.stringify(programs, null, 2);
+}
+
+function deserializeMarkovPrograms(serializedData) {
+    const data = JSON.parse(serializedData);
+    return data.map(item => new MarkovProgramm(item.name, item.input, item.max_steps, item.rules));
+}
+
+function downloadProgramms() {
+    const blob = new Blob([serializeMarkovPrograms(programs)], { type: 'application/json' });
+	const filename = "markovAlgorithm.markov";
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || 'data.json';
+
+    document.body.appendChild(a);
+    a.click();
+
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+document.getElementById('fileInput').addEventListener('change', (event) => {
+	const file = event.target.files[0];
+
+	if (file) {
+		const reader = new FileReader();
+		reader.onload = function(event) {
+			const serializedData = event.target.result;
+			const pro = deserializeMarkovPrograms(serializedData);
+			console.log(pro);
+			programs = pro;
+			proggramDivUpdate();
+		};
+		reader.readAsText(file);
+	} else {
+		alert('Пожалуйста, выберите файл для загрузки.');
+	}
+});
+
+function addProgramm () {
+	var intput_string = getInputString();
+	var max_steps = getMaxSteps();
+	var rules = getRules();
+	var name = getName();
+	var p = new MarkovProgramm(name, intput_string, max_steps, rules);
+	programs.push(p);
+	console.log(programs);
+	proggramDivUpdate();
+}
+
+function rulesToString(rules) {
+	var res = "";
+	for (var rule of rules) {
+		res += `${rule}\n`
+	}
+	return res;
+}
+
+function loadProgramm(n) {
+	var p = programs[n];
+	setName(p.getName());
+	setInputString(p.getInputString());
+	setMaxSteps(p.getMaxSteps());
+	setRules(rulesToString(p.getRules()));
+}
+
+function removeProgramm(n) {
+	programs.splice(n, 1);
+	proggramDivUpdate();
+}
+
+function proggramDivUpdate() {
+	var div = getProgrammsDiv();
+	div.innerHTML = "";
+
+	var res = "";
+	for (var i = 0; i < programs.length; i++) {
+		res += "<div>";
+		res += `<input type='text' value='${programs[i].getName()}' disabled>`;
+		res += `<input type='button' value='Upload' onclick='loadProgramm(${i})'>`;
+		res += `<input type='button' value='Remove' onclick='removeProgramm(${i})'>`;
+		res += "</div>";
+	}
+	div.innerHTML = res;
 }

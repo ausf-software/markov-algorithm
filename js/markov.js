@@ -78,6 +78,31 @@ class Result {
     }
 }
 
+class MarkovProgramm {
+    constructor(name, input, max_steps, rules) {
+        this.name = name;
+        this.max_steps = max_steps;
+        this.input = input;
+        this.rules = rules;
+    }
+
+    getMaxSteps() {
+        return this.max_steps;
+    }
+
+    getName() {
+        return this.name;
+    }
+
+    getInputString() {
+        return this.input;
+    }
+
+    getRules() {
+        return this.rules;
+    }
+}
+
 class Rule {
     constructor(pattern, replacement, stopped) {
         this.pattern = pattern;

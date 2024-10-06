@@ -35,6 +35,10 @@
 					<div id="head" class="head">
 						<form>
 							<div>
+								<label for="name-string">Programm name:</label>
+								<input type="text" name="name-string" id="name-string" placeholder="Name" onkeydown="if(event.keyCode==13){return false;}">
+							</div>
+							<div>
 								<label for="intput-string">Input string:</label>
 								<input type="text" name="intput-string" id="intput-string" placeholder="abc" onkeydown="if(event.keyCode==13){return false;}">
 							</div>
@@ -47,7 +51,15 @@
 							</div>
 							<div>
 								<input type="button" name="submit" id="submit" value="Submit">
+								<input type="button" id="add" value="Add programm" onclick="addProgramm()">
 								<input type="button" id="share" value="Share">
+								<input type="button" id="save_file" value="Save file" onclick="downloadProgramms()">
+								<label for="fileInput" class="custom-file-upload">
+									Upload File
+								</label>
+								<input type="file" id="fileInput" accept=".markov" />
+							</div>
+							<div id="programms_div">
 							</div>
 						</form>
 					</div>
@@ -72,6 +84,9 @@
 								</p>
 								<p class='answer'>
 									Через <code>//</code> в начале строки описывается <strong>комментарий</strong>.
+								</p>
+								<p class='answer'>
+									Поделиться ссылкой можно только на программу находящуюся в данный момент в поле ввода. Если необходимо поделиться списком программ, скачайте файл содержащий этот список.
 								</p>
 							</div>
 						</div>
