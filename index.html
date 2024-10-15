@@ -14,92 +14,102 @@
 		<link rel="apple-touch-icon" href="https://ausf-software.github.io/images/favicons/apple.png">  <!-- 180×180 -->
 		<link rel="manifest" href="https://ausf-software.github.io/manifest.webmanifest">
 
-		<link rel="stylesheet" type="text/css" href="https://ausf-software.github.io/css/style.css">
+		<link rel="stylesheet" type="text/css" href="/css/standart-style.css">
 		<link rel="stylesheet" type="text/css" href="css/markov_calc.css">
 		
 		<meta name="viewport" content="width=device-width">
 		<meta name="description" content="Алгоритм Маркова — это метод обработки строк, который использует набор правил для замены подстрок в исходной строке. Он широко применяется в теории автоматов и формальных языках, а также в различных областях, таких как лингвистика и искусственный интеллект. Алгоритм позволяет моделировать и анализировать последовательности символов, что делает его полезным инструментом для решения задач, связанных с преобразованием данных. | Markov algorithm is a string processing method that uses a set of rules for replacing substrings in the initial string. It is widely used in automata theory and formal languages, as well as in various fields such as linguistics and artificial intelligence. The algorithm allows modeling and analyzing sequences of characters, making it a useful tool for solving problems related to data transformation." />
 		<meta name="keywords" content="алгоритм Маркова, правила замены, формальные языки, теория автоматов, обработка строк, алгоритмы, искусственный интеллект | Markov algorithm, replacement rules, formal languages, automata theory, string processing, algorithms, artificial intelligence" />		
 		<meta name = "robots" content = "index,follow" />
-		<script type="text/javascript" src="https://ausf-software.github.io/js/script.js"></script>
+
+		<script type="text/javascript" src="/js/standart-script.js"></script>
 	</head>
 
 	<body>
 
-		<header id="header"></header>
+		<header>
+			<section>
+				<nav class="navbar">
+					<div class="burger" id="burger">
+						<div class="line"></div>
+						<div class="line"></div>
+						<div class="line"></div>
+					</div>
+					<div class="nav-list" id="nav-list">
+						<a href="/">Home</a>
+						<a href="/about">About</a>
+						<a href="/product">Products</a>
+						<a href="/tutorials">Tutorials</a>
+						<a href="https://github.com/ausf-software">GitHub</a>
+					</div>
+				</nav>
+			</section>
+			<section class="content-container banner">
+				<p>Algorithmic machine</p>
+				<h1 class="slogan">Markov Algorithm Calculator</h1>
+			</section>
+			<section id="head" class="head content-container">
+				<p>
+					<strong>Markov Algorithms</strong> are formal systems used to describe computations and manipulations with symbols. They are based on rules that define how to transform strings of symbols and find applications in various fields, including automata theory and logic.
+				</p>
+				<p>
+					<strong>Rules of Markov Algorithms</strong> are written in the form of pairs, where each pair consists of a string to be replaced and the string it will be replaced with. These rules are written sequentially, each on a new line.
+				</p>
+				<p>
+					A <strong>simple replacement</strong> is described using <code>-></code>, while a <strong>final replacement</strong> is described using <code>=></code>.
+				</p>
+				<p>
+					A <strong>comment</strong> is described at the beginning of a line using <code>//</code>.
+				</p>
+				<p>
+					You can only share a link to the program currently in the input field. If you need to share a list of programs, download the file containing that list.
+				</p>
+			</section>
+		</header>
 
 		<main>
-			<section>
-				<div class="calculator-settings">
-					<h1 class="calculator-text">Markov Algorithm Calculator</label>
-					<div id="head" class="head">
-						<form>
-							<div>
-								<label for="name-string">Programm name:</label>
-								<input type="text" name="name-string" id="name-string" placeholder="Name" onkeydown="if(event.keyCode==13){return false;}">
-							</div>
-							<div>
-								<label for="intput-string">Input string:</label>
-								<input type="text" name="intput-string" id="intput-string" placeholder="abc" onkeydown="if(event.keyCode==13){return false;}">
-							</div>
-							<div>
-								<label for="max-steps">Maximum number of steps:</label>
-								<input type="number" name="max-steps" id="max-steps" placeholder="1000" onkeydown="if(event.keyCode==13){return false;}">
-							</div>
-							<div>
-								<textarea type="text" name="rules-string" id="rules-string" placeholder="Rules"></textarea>
-							</div>
-							<div>
-								<input type="button" name="submit" id="submit" value="Submit">
-								<input type="button" id="add" value="Add programm" onclick="addProgramm()">
-								<input type="button" id="share" value="Share">
-								<input type="button" id="save_file" value="Save file" onclick="downloadProgramms()">
-								<label for="fileInput" class="custom-file-upload">
-									Upload File
-								</label>
-								<input type="file" id="fileInput" accept=".markov" />
-							</div>
-							<div id="programms_div">
-							</div>
-						</form>
+			<section class="input-section center">
+				<div class="input-form">
+					<div class="space-div">
+						<label for="name-string">Programm name:</label>
+						<input type="text" name="name-string" id="name-string" placeholder="Name" onkeydown="if(event.keyCode==13){return false;}">
+					</div>
+					<div class="space-div">
+						<label for="intput-string">Input string:</label>
+						<input type="text" name="intput-string" id="intput-string" placeholder="abc" onkeydown="if(event.keyCode==13){return false;}">
+					</div>
+					<div class="space-div">
+						<label for="max-steps">Maximum number of steps:</label>
+						<input type="number" name="max-steps" id="max-steps" placeholder="1000" onkeydown="if(event.keyCode==13){return false;}">
+					</div>
+					<div class="space-div">
+						<textarea type="text" class="textarea-size" name="rules-string" id="rules-string" placeholder="Rules"></textarea>
+					</div>
+					<div class="space-div">
+						<button id="submit">Submit</button>
+						<button id="add" onclick="addProgramm()">Add programm</button>
+						<button id="share">Share</button>
+						<button id="save_file" onclick="downloadProgramms()">Save file</button>
+						<label for="fileInput" class="styled-file-upload">
+							<input type="file" id="fileInput" accept=".markov" />
+							Upload File
+						</label>
 					</div>
 				</div>
+				
+				<div class="input-form answer-form">
+					<div id="result_string" class="space-div">Result:</div>
+					<div id="result_steps" class="space-div">Count steps:</div>
+					<div class="line-table-container list-size" id="lineContainer"></div>
+				</div>
 			</section>
-			
-			<section class="answer_section">
-				<div class="container">
-				
-					<div class="answer_section_container">
-						<div class="answer_container" id="info">
-							<label id="info_selector" class="selector">&#9660; Readme</label>
-							<div id="info_div">
-								<p class='answer'>
-									<strong>Алгоритмы Маркова</strong> представляют собой формальные системы, которые используются для описания вычислений и манипуляций с символами. Они основаны на правилах, которые определяют, как преобразовывать строки символов, и находят применение в различных областях, включая теорию автоматов и логику.
-								</p>
-								<p class='answer'>
-									<strong>Правила алгоритмов Маркова</strong> записываются в виде пар, где каждая пара состоит из строки, которую нужно заменить, и строки, на которую она будет заменена. Эти правила записываются последовательно, каждое на новой строке.
-								</p>
-								<p class='answer'>
-									Через <code>-></code> описывается <strong>простая замена</strong>, а через <code>=></code> — <strong>заключительная замена</strong>.
-								</p>
-								<p class='answer'>
-									Через <code>//</code> в начале строки описывается <strong>комментарий</strong>.
-								</p>
-								<p class='answer'>
-									Поделиться ссылкой можно только на программу находящуюся в данный момент в поле ввода. Если необходимо поделиться списком программ, скачайте файл содержащий этот список.
-								</p>
-							</div>
-						</div>
+			<section class="programm-section">
+				<div class="list-con content-container">
+					<div class="lab">
+						Programm list:
 					</div>
-				
-					<div class="answer_section_container">
-						<div class="answer_container" id="text_answer">
-							<label id="answer_text_selector" class="selector">&#9660; Text answer</label>
-							<div id="text_answer_div">
-							</div>
-						</div>
+					<div id="programms_div" class="programms-div">
 					</div>
-					
 				</div>
 			</section>
 		</main>
@@ -107,7 +117,13 @@
 		<script type="text/javascript" src="js/markov.js"></script>
 		<script type="text/javascript" src="js/markov_calc.js"></script>
 
-		<footer id="footer"></footer>
+		<footer>
+			<div class="social-links">
+				<a href="https://habr.com/ru/users/ausf-software/" target="_blank">Habr</a>
+				<a href="https://github.com/ausf-software" target="_blank">GitHub</a>
+				<a href="https://leetcode.com/u/ausf-software/" target="_blank">LeetCode</a>
+			</div>
+		</footer>
 		
 	</body>
 </html>

@@ -1,6 +1,3 @@
-setHide("info_div", "info_selector", "Readme");
-setHide("text_answer_div", "answer_text_selector", "Text answer");
-
 function getAcceptButton() {
 	return document.getElementById("submit");
 }
@@ -53,12 +50,18 @@ function setMaxSteps(steps) {
 }
 
 function clearAnswer() {
-	document.getElementById("text_answer_div").innerHTML = "<br>";
+	const lineContainer = document.getElementById('lineContainer');
+	lineContainer.innerHTML = "";
 }
 
-function getAnswerDiv() {
-	return document.getElementById("text_answer_div");
+function setResultString(str) {
+	document.getElementById('result_string').innerHTML = `Result: ${str}`;
 }
+
+function setResultSteps(str) {
+	document.getElementById('result_steps').innerHTML = `Count steps: ${str}`;
+}
+
 function getProgrammsDiv() {
 	return document.getElementById("programms_div");
 }
@@ -85,40 +88,15 @@ getAcceptButton().onclick = function(){
         var result = markovAlgorithm.execute(max_steps);
 		var st = result.getIntermediate().split("\n");
 
-		var a = `
-            <p class='answer'><strong>Шаги:</strong> ${result.getSteps()}</p>
-            <p class='answer'><strong>Результат:</strong> ${result.getRes()}</p>
-            <p class='answer'><strong>Промежуточные результаты:</p>
-        `;
-		for (let s of st) {
-			a += `<p class='answer_sub'>${s}</p>`;
-		}
-		
-		var theDivText = getAnswerDiv();
-		theDivText.innerHTML = a;
+		setResultSteps(result.getSteps());
+		setResultString(result.getRes());
+		const lineContainer = document.getElementById('lineContainer');
+		addLinesToContainer(st, lineContainer);
 	} else {
 		alert("Invalid text");
 	}
 }
 
-document.getElementById("info_selector").onclick = function(){
-	setHide("info_div", "info_selector", "Readme");
-}
-
-document.getElementById("answer_text_selector").onclick = function(){
-	setHide("text_answer_div", "answer_text_selector", "Text answer");
-}
-
-function setHide(id, name, text) {
-	var element = document.getElementById(id);
-	if (element.style.display == "none") {
-		element.style.display = '';
-		document.getElementById(name).innerHTML = "▼ " + text;
-	} else {
-		element.style.display = 'none';
-		document.getElementById(name).innerHTML = "➤ " + text;
-	}
-}
 function hasNoSpacesOrNewlines(str) {
     const regex = /^[^\s]*$/;
     return regex.test(str);
@@ -283,16 +261,29 @@ function removeProgramm(n) {
 	proggramDivUpdate();
 }
 
+function updateProgramm(n) {
+	var intput_string = getInputString();
+	var max_steps = getMaxSteps();
+	var rules = getRules();
+	var name = getName();
+	var p = new MarkovProgramm(name, intput_string, max_steps, rules);
+	programs[n] = p;
+	proggramDivUpdate();
+}
+
 function proggramDivUpdate() {
 	var div = getProgrammsDiv();
 	div.innerHTML = "";
 
 	var res = "";
 	for (var i = 0; i < programs.length; i++) {
-		res += "<div>";
-		res += `<input type='text' value='${programs[i].getName()}' disabled>`;
-		res += `<input type='button' value='Upload' onclick='loadProgramm(${i})'>`;
-		res += `<input type='button' value='Remove' onclick='removeProgramm(${i})'>`;
+		res += "<div class='program'>";
+		res += `<span class="program-name">${programs[i].getName()}</span>`;
+		res += '<div class="programm-buttons">';
+		res += `<button onclick='loadProgramm(${i})' class="btn download">Upload</button>`;
+		res += `<button onclick='removeProgramm(${i})' class="btn delete">Remove</button>`;
+		res += `<button onclick='updateProgramm(${i})' class="btn save">Update</button>`;
+		res += '</div>';
 		res += "</div>";
 	}
 	div.innerHTML = res;
